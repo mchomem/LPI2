@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>.: Manutenção de paciente :.</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <p:commandButton id="comGravar" value="Gravar" action="#{mbPaciente.gravar()}" />
+            <p:commandButton id="comConsultar" value="Consulta" action="#{mbPaciente.consultar()}" />
+
+            <p:panelGrid columns="2">
+
+                <p:outputLabel for="idNome" value="Nome:"/>
+                <p:inputText id="idNome" size="50" value="#{mbPaciente.voPaciente.nome}" />
+
+                <p:outputLabel for="idIdade" value="Idade:"/>
+                <p:inputText id="idIdade" size="3" value="#{mbPaciente.voPaciente.idade}" />
+
+                <p:outputLabel for="idSexo" value="Sexo:" />
+                <p:selectOneRadio id="idSexo" value="#{mbPaciente.voPaciente.sexo}">
+                    <f:selectItem itemLabel="Masculino" itemValue="M" />
+                    <f:selectItem itemLabel="Feminino" itemValue="F" />
+                </p:selectOneRadio>
+
+                <p:outputLabel for="idEndereco" value="Endereço:" />
+                <p:inputText id="idEndereco" size="50" value="#{mbPaciente.voPaciente.endereco}" />
+
+                <p:outputLabel for="idTelefone" value="Telefone:"/>
+                <p:inputMask id="idTelefone" mask="(99)9999.9999" size="12" value="#{mbPaciente.voPaciente.telefone}"/>
+
+                <p:outputLabel for="idAtivo" value="Está ativo?"/>
+                <p:selectBooleanCheckbox id="idAtivo" value="#{mbPaciente.voPaciente.ativo}" />
+
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+    
+</html>
