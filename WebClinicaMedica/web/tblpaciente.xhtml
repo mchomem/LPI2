@@ -14,6 +14,7 @@
         <p:commandButton id="comNovo" value="Novo" action="frmpaciente"/>
         <h:form>
             <p:dataTable value="#{mbPaciente.voPacientes}" var="paciente">
+                
                 <f:facet name="header">
                     <h:outputText value="Registro de Pacientes" />
                 </f:facet>
@@ -68,14 +69,14 @@
                 </p:column>
 
                 <p:column>
-                    <p:commandLink action="formulario" value="Editar" >
-                        <f:setPropertyActionListener target="#{mbPaciente.voPacienteSelecionado}" value="#{paciente}" />
+                    <p:commandLink action="frmpaciente" value="Editar" >
+                        <f:setPropertyActionListener target="#{mbPaciente.voPaciente}" value="#{paciente}" />
                     </p:commandLink>
                 </p:column>
 
                 <p:column>
-                    <p:commandLink action="visualizacao" value="Excluir" >
-                        <f:setPropertyActionListener target="#{mbPaciente.voPacienteSelecionado}" value="#{paciente}" />
+                    <p:commandLink action="#{mbPaciente.excluir()}" value="Excluir" >
+                        <f:setPropertyActionListener target="#{mbPaciente.voPaciente}" value="#{paciente}" />
                     </p:commandLink>
                 </p:column>
 

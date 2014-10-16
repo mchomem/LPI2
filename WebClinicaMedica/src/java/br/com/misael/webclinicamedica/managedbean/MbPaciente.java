@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.misael.webclinicamedica.managedbean;
 
 import br.com.misael.webclinicamedica.model.dao.DaoPaciente;
@@ -12,18 +7,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
- * @author Misael
+ * @author Misael C. Homem
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class MbPaciente {
 
     private VoPaciente voPaciente;
-    private VoPaciente voPacienteSelecionado;
     private List<VoPaciente> voPacientes;
     private DaoPaciente daoPaciente;
     
@@ -33,7 +27,6 @@ public class MbPaciente {
     public MbPaciente() {
     
         voPaciente = new VoPaciente();
-        voPacienteSelecionado = new VoPaciente();
         voPacientes = new ArrayList<>();
         daoPaciente = new DaoPaciente();
     
@@ -41,23 +34,40 @@ public class MbPaciente {
     
     public void gravar() {
         
-        System.out.println("Gravado...");
-        
         try {
             daoPaciente.gravar(voPaciente);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            Logger.getLogger(MbPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Logger.getLogger(MbPaciente.class.getName()).log(Level.SEVERE, null, e);
         }
         
     }
     
     public void excluir() {
         
+        long id = this.voPaciente.getIdPaciente();
+        System.err.println("**************************");
+        System.err.println("*** ID PACIENTE ***: " + id);
+        System.err.println("**************************");
+        this.daoPaciente.excluir(id);
+        
     }
     
     public String consultar() {
+        
+        try {
+            
+            this.voPacientes = daoPaciente.consultar();
+            
+        } catch(Exception e) {
+            
+            System.out.println(e.getMessage());
+            Logger.getLogger(MbPaciente.class.getName()).log(Level.SEVERE, null, e);
+            
+        }
+        
         return "tblpaciente";
+        
     }
     
     public VoPaciente getVoPaciente() {
@@ -66,14 +76,6 @@ public class MbPaciente {
 
     public void setVoPaciente(VoPaciente voPaciente) {
         this.voPaciente = voPaciente;
-    }
-
-    public VoPaciente getVoPacienteSelecionado() {
-        return voPacienteSelecionado;
-    }
-
-    public void setVoPacienteSelecionado(VoPaciente voPacienteSelecionado) {
-        this.voPacienteSelecionado = voPacienteSelecionado;
     }
 
     public List<VoPaciente> getVoPacientes() {

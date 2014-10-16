@@ -20,9 +20,8 @@ import javax.persistence.Id;
 public class VoPaciente implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaciente;
     @Column(length = 100, nullable = false)
     private String nome;
