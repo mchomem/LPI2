@@ -1,16 +1,21 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.misael.webclinicamedica.managedbean;
 
-import br.com.misael.webclinicamedica.model.dao.DaoPaciente;
-import br.com.misael.webclinicamedica.model.vo.VoPaciente;
+import br.com.misael.webclinicamedica.model.dao.DaoMedicamento;
+import br.com.misael.webclinicamedica.model.vo.VoMedicamento;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
-import org.primefaces.context.RequestContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -18,27 +23,27 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class MbPaciente {
+public class MbMedicamento {
 
-    private VoPaciente       voPaciente;
-    private List<VoPaciente> voPacientes;
-    private DaoPaciente      daoPaciente;
+    private VoMedicamento       voMedicamento;
+    private List<VoMedicamento> voMedicamentos;
+    private DaoMedicamento      daoMedicamento;
     
     /**
-     * Creates a new instance of MbPaciente
+     * Creates a new instance of mbMedicamento
      */
-    public MbPaciente() {
-    
-        this.voPaciente  = new VoPaciente();
-        this.voPacientes = new ArrayList<>();
-        this.daoPaciente = new DaoPaciente();
-    
+    public MbMedicamento() {
+        
+        this.voMedicamento  = new VoMedicamento();
+        this.voMedicamentos = new ArrayList<>();
+        this.daoMedicamento = new DaoMedicamento();
+        
     }
     
     public String inicializar() {
         
-        this.voPaciente = new VoPaciente();
-        return "frmpaciente";
+        this.voMedicamento = new VoMedicamento();
+        return "frmmedicamento";
         
     }
     
@@ -49,12 +54,12 @@ public class MbPaciente {
         
         try {
             
-            daoPaciente.gravar(voPaciente);
+            daoMedicamento.gravar(voMedicamento);
             
             mensagem     = "Registro gravado com sucesso.";
             iconeDialogo = FacesMessage.SEVERITY_INFO;
-           
-        } catch (Exception e) {
+            
+        } catch(Exception e) {
             
             System.out.println(e.getMessage());
             Logger.getLogger(MbPaciente.class.getName()).log(Level.SEVERE, null, e);
@@ -73,8 +78,8 @@ public class MbPaciente {
         
         try {
             
-            long id = this.voPaciente.getIdPaciente();
-            this.daoPaciente.excluir(id);
+            long id = this.voMedicamento.getIdMedicamento();
+            this.daoMedicamento.excluir(id);
             this.consultar();
             
         } catch(Exception e) {
@@ -83,19 +88,15 @@ public class MbPaciente {
             
         }
         
-        // Para atualizar a dataTable da página jsf logo após a operação de exclusão
-        // deve ser usado no retorno do método da classe ManagedBean uma query-string: <página>?faces-redirect=true"
-        // no return.
-        // http://www.guj.com.br/java/283626-autualizar-pagina-apos-pconfirmdialog
-        return "tblpaciente?faces-redirect=true";
+        return "tblmedicamento?faces-redirect=true";
         
     }
     
     public String consultar() {
         
         try {
-            
-            this.voPacientes = daoPaciente.consultar();
+         
+            this.voMedicamentos = daoMedicamento.consultar();
             
         } catch(Exception e) {
             
@@ -107,24 +108,24 @@ public class MbPaciente {
             
         }
         
-        return "tblpaciente";
+        return "tblmedicamento";
         
     }
     
-    public VoPaciente getVoPaciente() {
-        return voPaciente;
+    public VoMedicamento getVoMedicamento() {
+        return voMedicamento;
     }
 
-    public void setVoPaciente(VoPaciente voPaciente) {
-        this.voPaciente = voPaciente;
+    public void setVoMedicamento(VoMedicamento voMedicamento) {
+        this.voMedicamento = voMedicamento;
     }
 
-    public List<VoPaciente> getVoPacientes() {
-        return voPacientes;
+    public List<VoMedicamento> getVoMedicamentos() {
+        return voMedicamentos;
     }
 
-    public void setVoPacientes(List<VoPaciente> voPacientes) {
-        this.voPacientes = voPacientes;
+    public void setVoMedicamentos(List<VoMedicamento> voMedicamentos) {
+        this.voMedicamentos = voMedicamentos;
     }
     
 }

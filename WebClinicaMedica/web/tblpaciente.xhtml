@@ -3,85 +3,110 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <h:head>
-        <title> .: Registro de paciente :.</title>
+        <title></title>
     </h:head>
     
     <h:body>
 
-        <p:commandButton id="comNovo" value="Novo" action="frmpaciente"/>
-        <h:form>
-            <p:dataTable value="#{mbPaciente.voPacientes}" var="paciente">
-                
-                <f:facet name="header">
-                    <h:outputText value="Registro de Pacientes" />
-                </f:facet>
+        <ui:composition template="paginamestre.xhtml">
+            <ui:define name="content">
+                <h:form id="frmPaciente">
+                    
+                    <p:fieldset legend="Paciente" id="pnlPaciente" >
+                        
+                        <p:commandButton id="comNovo" action="#{mbPaciente.inicializar()}" icon="ui-icon-circle-plus" />
+                        <p:separator />
+                        <p:dataTable id="tblPaciente"
+                                     value="#{mbPaciente.voPacientes}"
+                                     var="paciente">
+                            <f:facet name="header">
+                                <h:outputText value="Registro de Pacientes" />
+                            </f:facet>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Código"/>
-                    </f:facet>
-                    <p:outputLabel value="#{paciente.idPaciente}" />
-                </p:column>
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Código"/>
+                                </f:facet>
+                                <p:outputLabel value="#{paciente.idPaciente}" />
+                            </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Nome"/>
-                    </f:facet>
-                    <p:outputLabel value="#{paciente.nome}" />
-                </p:column>
+                            <p:column width="200">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Nome"/>
+                                </f:facet>
+                                <p:outputLabel value="#{paciente.nome}" />
+                            </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Idade" />
-                    </f:facet>
-                    <p:outputLabel value ="#{paciente.idade}"/>
-                </p:column>
+                            <p:column width="30">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Idade" />
+                                </f:facet>
+                                <p:outputLabel value ="#{paciente.idade}"/>
+                            </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Sexo" />
-                    </f:facet>
-                    <p:outputLabel value="#{paciente.sexo}" />
-                </p:column>
+                            <p:column width="30">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Sexo" />
+                                </f:facet>
+                                <p:outputLabel value="#{paciente.sexo}" />
+                            </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Endereço" />
-                    </f:facet>
-                    <p:outputLabel value="#{paciente.endereco}" />
-                </p:column>
+                            <p:column width="200">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Endereço" />
+                                </f:facet>
+                                <p:outputLabel value="#{paciente.endereco}" />
+                            </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Telefone" />
-                    </f:facet>
-                    <p:outputLabel value="#{paciente.telefone}" />
-                </p:column>
+                            <p:column width="70">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Telefone" />
+                                </f:facet>
+                                <p:outputLabel value="#{paciente.telefone}" />
+                            </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Ativo?" />
-                    </f:facet>
-                    <p:outputLabel value="#{paciente.ativo}" />
-                </p:column>
+                            <p:column width="35">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Ativo?" />
+                                </f:facet>
+                                <p:outputLabel value="#{paciente.exibicaoAtivo}" />
+                            </p:column>
 
-                <p:column>
-                    <p:commandLink action="frmpaciente" value="Editar" >
-                        <f:setPropertyActionListener target="#{mbPaciente.voPaciente}" value="#{paciente}" />
-                    </p:commandLink>
-                </p:column>
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Edição" />
+                                </f:facet>
+                                <p:commandButton action="frmpaciente" icon="ui-icon-pencil" >
+                                    <f:setPropertyActionListener target="#{mbPaciente.voPaciente}" value="#{paciente}" />
+                                </p:commandButton>
+                            </p:column>
 
-                <p:column>
-                    <p:commandLink action="#{mbPaciente.excluir()}" value="Excluir" >
-                        <f:setPropertyActionListener target="#{mbPaciente.voPaciente}" value="#{paciente}" />
-                    </p:commandLink>
-                </p:column>
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Exclusão" />
+                                </f:facet>
+                                <p:commandButton action="#{mbPaciente.excluir()}" icon="ui-icon-closethick" >
+                                    <p:confirm header="Web Clínica Médica" message="Confirma exclusão?" icon="ui-icon-alert" />
+                                    <f:setPropertyActionListener target="#{mbPaciente.voPaciente}" value="#{paciente}" />
+                                </p:commandButton>
 
-            </p:dataTable>
-        </h:form>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+                    
+                    </p:fieldset>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        
     </h:body>
     
 </html>

@@ -3,42 +3,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <h:head>
         <title>.: Manutenção de paciente :.</title>
     </h:head>
 
     <h:body>
-        <h:form>
-            <p:commandButton id="comGravar" value="Gravar" action="#{mbPaciente.gravar()}" />
-            <p:commandButton id="comConsultar" value="Consulta" action="#{mbPaciente.consultar()}" />
+        
+        <ui:composition template="paginamestre.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    
+                    <p:fieldset legend="Paciente" id="pnlPaciente" >
+                        <p:commandButton id="comNovo" action="#{mbPaciente.inicializar()}" icon="ui-icon-circle-plus" />
+                        <p:commandButton id="comGravar" action="#{mbPaciente.gravar()}" icon="ui-icon-disk" />
+                        <p:commandButton id="comConsultar" action="#{mbPaciente.consultar()}" icon="ui-icon-search" />
+                        <p:separator />
+                        <h:panelGrid columns="2" >
+                            
+                            <p:outputLabel for="idNome" value="Nome:" />
+                            <p:inputText id="idNome" size="50" value="#{mbPaciente.voPaciente.nome}" />
 
-            <p:panelGrid columns="2">
+                            <p:outputLabel for="idIdade" value="Idade:" />
+                            <p:inputText id="idIdade" size="3" value="#{mbPaciente.voPaciente.idade}" />
 
-                <p:outputLabel for="idNome" value="Nome:"/>
-                <p:inputText id="idNome" size="50" value="#{mbPaciente.voPaciente.nome}" />
+                            <p:outputLabel for="idSexo" value="Sexo:" />
+                            <p:selectOneRadio id="idSexo" value="#{mbPaciente.voPaciente.sexo}">
+                                <f:selectItem itemLabel="Masculino" itemValue="M"  />
+                                <f:selectItem itemLabel="Feminino" itemValue="F" />
+                            </p:selectOneRadio>
 
-                <p:outputLabel for="idIdade" value="Idade:"/>
-                <p:inputText id="idIdade" size="3" value="#{mbPaciente.voPaciente.idade}" />
+                            <p:outputLabel for="idEndereco" value="Endereço:" />
+                            <p:inputText id="idEndereco" size="50" value="#{mbPaciente.voPaciente.endereco}" />
 
-                <p:outputLabel for="idSexo" value="Sexo:" />
-                <p:selectOneRadio id="idSexo" value="#{mbPaciente.voPaciente.sexo}">
-                    <f:selectItem itemLabel="Masculino" itemValue="M" />
-                    <f:selectItem itemLabel="Feminino" itemValue="F" />
-                </p:selectOneRadio>
+                            <p:outputLabel for="idTelefone" value="Telefone:" />
+                            <p:inputMask id="idTelefone" mask="(99)9999.9999" size="12" value="#{mbPaciente.voPaciente.telefone}"/>
 
-                <p:outputLabel for="idEndereco" value="Endereço:" />
-                <p:inputText id="idEndereco" size="50" value="#{mbPaciente.voPaciente.endereco}" />
-
-                <p:outputLabel for="idTelefone" value="Telefone:"/>
-                <p:inputMask id="idTelefone" mask="(99)9999.9999" size="12" value="#{mbPaciente.voPaciente.telefone}"/>
-
-                <p:outputLabel for="idAtivo" value="Está ativo?"/>
-                <p:selectBooleanCheckbox id="idAtivo" value="#{mbPaciente.voPaciente.ativo}" />
-
-            </p:panelGrid>
-        </h:form>
+                            <p:outputLabel for="idAtivo" value="Está ativo?" />
+                            <p:selectBooleanCheckbox id="idAtivo" value="#{mbPaciente.voPaciente.ativo}" />
+                            
+                        </h:panelGrid>
+                    
+                    </p:fieldset>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
     
 </html>

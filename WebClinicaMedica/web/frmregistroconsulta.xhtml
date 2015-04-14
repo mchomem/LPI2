@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <h:head>
+        <title></title>
+    </h:head>
+    
+    <h:body>
+        
+        <ui:composition template="paginamestre.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    
+                    <p:fieldset legend="Registro da Consulta" id="pnlRegistroConsulta" >
+                        <p:commandButton id="comNovo" action="#{mbRegistroConsulta.inicializar()}" icon="ui-icon-circle-plus" />
+                        <p:commandButton id="comGravar" action="#{mbRegistroConsulta.gravar()}" icon="ui-icon-disk" />
+                        <p:commandButton id="comConsultar" action="#{mbRegistroConsulta.consultar()}" icon="ui-icon-search" />
+                        <p:separator />
+                        <h:panelGrid columns="2" >
+
+                            <p:outputLabel for="idConsulta" value="Agendamento:" />
+                            <p:selectOneMenu id="idConsulta" effect="fade" value="#{mbRegistroConsulta.voRegistroConsulta.voAgendamento}">
+                                <f:selectItem itemLabel="Selecione um agendamento" itemValue="" />
+                                <f:selectItems value="#{mbRegistroConsulta.popularAgendamentos()}"
+                                               var="agendamento"
+                                               itemLabel="#{agendamento.paciente.nome}"
+                                               itemValue="#{agendamento}" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="idProntuario" value="Prontuário:" />
+                            <p:inputTextarea cols="60" rows="8" id="idProntuario" value="#{mbRegistroConsulta.voRegistroConsulta.prontuario}"/>
+                            
+                            <p:outputLabel for="idConsultaFinalizada" value="Consulta finalizada?" />
+                            <p:selectBooleanCheckbox id="idConsultaFinalizada" value="#{mbRegistroConsulta.voRegistroConsulta.consultaFinalizada}" />
+                            
+                        </h:panelGrid>
+                        
+                    </p:fieldset>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>.: Agendamento :.</title>
+    </h:head>
+    
+    <h:body>
+        <ui:composition template="paginamestre.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    
+                    <p:fieldset legend="Agendamento" id="pnlAgendamento" >
+                        <p:commandButton id="comNovo" action="#{mbAgendamento.inicializar()}" icon="ui-icon-circle-plus" />
+                        <p:commandButton id="comGravar" action="#{mbAgendamento.gravar()}" icon="ui-icon-disk" />
+                        <p:commandButton id="comConsultar" action="#{mbAgendamento.consultar()}" icon="ui-icon-search" />
+                        <p:separator />
+                        <h:panelGrid columns="2" >
+
+                            <p:outputLabel for="idPaciente" value="Paciente:" />
+                            <p:selectOneMenu id="idPaciente" effect="fade" value="#{mbAgendamento.voAgendamento.paciente}">
+                                <f:selectItem itemLabel="Selecione um paciente" itemValue="" />
+                                <f:selectItems value="#{mbAgendamento.popularPacientes()}"
+                                               var="paciente"
+                                               itemLabel="#{paciente.nome}"
+                                               itemValue="#{paciente}" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="idDataConsulta" value="Data da Consulta:" />
+                            <p:calendar id="idDataConsulta"
+                                        mask="99/99/9999"
+                                        pattern="dd/MM/yyyy"
+                                        value="#{mbAgendamento.voAgendamento.dataConsulta}" />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            
+                        </h:panelGrid>
+                        
+                    </p:fieldset>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

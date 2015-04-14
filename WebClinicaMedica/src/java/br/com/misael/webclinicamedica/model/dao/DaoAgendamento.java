@@ -1,6 +1,6 @@
 package br.com.misael.webclinicamedica.model.dao;
 
-import br.com.misael.webclinicamedica.model.vo.VoPaciente;
+import br.com.misael.webclinicamedica.model.vo.VoAgendamento;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,71 +11,69 @@ import javax.persistence.TypedQuery;
  *
  * @author Misael C. Homem
  */
-public class DaoPaciente {
-
-    public DaoPaciente() {}
-
+public class DaoAgendamento {
+    
+    public DaoAgendamento() {}
+    
     private EntityManager getEntityManager() throws Exception {
         
         EntityManagerFactory factory = null;
         EntityManager entityManager  = null;
         factory = Persistence.createEntityManagerFactory("WebClinicaMedicaPU");
         entityManager = factory.createEntityManager();
-
+        
         return entityManager;
 
     }
-
-    public VoPaciente gravar(VoPaciente voPaciente) throws Exception {
-
+    
+    public VoAgendamento gravar(VoAgendamento voAgendamento) throws Exception {
+        
         EntityManager entityManager = getEntityManager();
         entityManager.getTransaction().begin();
-        
-        if (voPaciente.getIdPaciente() == null) {
+
+        if (voAgendamento.getIdConsulta()== null) {
             // Grava novo registro.
-            entityManager.persist(voPaciente);
+            entityManager.persist(voAgendamento);
         } else {
             // Edita um registro já existente.
-            voPaciente = entityManager.merge(voPaciente);
+            voAgendamento = entityManager.merge(voAgendamento);
         }
-        
+
         entityManager.getTransaction().commit();
         entityManager.close();
-       
-        return voPaciente;
         
+        return voAgendamento;
     }
+    
+    public void excluir(Long idConsulta) throws Exception {
 
-    public void excluir(Long idPaciente) throws Exception {
-
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = getEntityManager();    
         entityManager.getTransaction().begin();
-        VoPaciente voPaciente = entityManager.find(VoPaciente.class, idPaciente);
-        entityManager.remove(voPaciente);
+        VoAgendamento voAgendamento = entityManager.find(VoAgendamento.class, idConsulta);
+        entityManager.remove(voAgendamento);
         entityManager.getTransaction().commit();
         entityManager.close();
         
     }
-
-    // Ideia da implementação obtida em http://www.devmedia.com.br/definindo-entity-manager-na-java-persistence-api/28271
-    public List<VoPaciente> consultar() throws Exception {
+    
+    public List<VoAgendamento> consultar() throws Exception {
         
         EntityManager entityManager = getEntityManager();
-        String jpql = "SELECT P FROM PACIENTE P";
-        TypedQuery<VoPaciente> consulta = entityManager.createQuery(jpql, VoPaciente.class);
-        List<VoPaciente> voPacientes    = consulta.getResultList();
+        String jpql = "SELECT A FROM AGENDAMENTO A";
+        TypedQuery<VoAgendamento> consulta = entityManager.createQuery(jpql, VoAgendamento.class);
+        List<VoAgendamento> voAgendamentos = consulta.getResultList();
         
-        return voPacientes;
+        return voAgendamentos;
         
     }
-
-    public VoPaciente consultar(Long idPaciente) throws Exception {
+    
+    public VoAgendamento consultar(Long idConsulta) throws Exception {
         
         EntityManager entityManager = getEntityManager();
-        VoPaciente voPaciente       = entityManager.find(VoPaciente.class, idPaciente);
+        VoAgendamento voAgendamento = entityManager.find(VoAgendamento.class, idConsulta);
         entityManager.close();
         
-        return voPaciente;
+        return voAgendamento;
         
     }
     

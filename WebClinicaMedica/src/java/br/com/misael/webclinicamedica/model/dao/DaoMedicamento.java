@@ -1,6 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.misael.webclinicamedica.model.dao;
 
-import br.com.misael.webclinicamedica.model.vo.VoPaciente;
+import br.com.misael.webclinicamedica.model.vo.VoMedicamento;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,11 +14,11 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Misael C. Homem
+ * @author Misael
  */
-public class DaoPaciente {
-
-    public DaoPaciente() {}
+public class DaoMedicamento {
+    
+    public DaoMedicamento() {}
 
     private EntityManager getEntityManager() throws Exception {
         
@@ -26,56 +31,46 @@ public class DaoPaciente {
 
     }
 
-    public VoPaciente gravar(VoPaciente voPaciente) throws Exception {
+    public VoMedicamento gravar(VoMedicamento voMedicamento) throws Exception {
 
         EntityManager entityManager = getEntityManager();
         entityManager.getTransaction().begin();
         
-        if (voPaciente.getIdPaciente() == null) {
+        if (voMedicamento.getIdMedicamento() == null) {
             // Grava novo registro.
-            entityManager.persist(voPaciente);
+            entityManager.persist(voMedicamento);
         } else {
             // Edita um registro já existente.
-            voPaciente = entityManager.merge(voPaciente);
+            voMedicamento = entityManager.merge(voMedicamento);
         }
         
         entityManager.getTransaction().commit();
         entityManager.close();
        
-        return voPaciente;
+        return voMedicamento;
         
     }
 
-    public void excluir(Long idPaciente) throws Exception {
+    public void excluir(long idMedicamento) throws Exception {
 
         EntityManager entityManager = getEntityManager();
         entityManager.getTransaction().begin();
-        VoPaciente voPaciente = entityManager.find(VoPaciente.class, idPaciente);
-        entityManager.remove(voPaciente);
+        VoMedicamento voMedicamento = entityManager.find(VoMedicamento.class, idMedicamento);
+        entityManager.remove(voMedicamento);
         entityManager.getTransaction().commit();
         entityManager.close();
         
     }
 
     // Ideia da implementação obtida em http://www.devmedia.com.br/definindo-entity-manager-na-java-persistence-api/28271
-    public List<VoPaciente> consultar() throws Exception {
+    public List<VoMedicamento> consultar() throws Exception {
         
-        EntityManager entityManager = getEntityManager();
-        String jpql = "SELECT P FROM PACIENTE P";
-        TypedQuery<VoPaciente> consulta = entityManager.createQuery(jpql, VoPaciente.class);
-        List<VoPaciente> voPacientes    = consulta.getResultList();
+        EntityManager entityManager    = getEntityManager();
+        String jpql = "SELECT M FROM MEDICAMENTO M";
+        TypedQuery<VoMedicamento> consulta = entityManager.createQuery(jpql, VoMedicamento.class);
+        List<VoMedicamento> voMedicamentos     = consulta.getResultList();
         
-        return voPacientes;
-        
-    }
-
-    public VoPaciente consultar(Long idPaciente) throws Exception {
-        
-        EntityManager entityManager = getEntityManager();
-        VoPaciente voPaciente       = entityManager.find(VoPaciente.class, idPaciente);
-        entityManager.close();
-        
-        return voPaciente;
+        return voMedicamentos;
         
     }
     

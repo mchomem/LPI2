@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>WCM - Login</title>
+    </h:head>
+    
+    <h:body>
+        <br />
+        <center>
+            <h:graphicImage value="/resources/imagens/web-clinica-medica-banner-login.png" />
+            <h:form style="width: 400px; text-align:left" >
+                <p:panel header="Login">
+                    <h:panelGrid columns="2" >
+                        
+                        <p:outputLabel for="idUsuario" value="Usuário:" />
+                        <p:inputText id="idUsuario" value="#{mbUsuario.voUsuarioLogin.nome}" />
+                        <p:outputLabel for="idSenha" value="Senha:" />
+                        <p:password id="idSenha"  value="#{mbUsuario.voUsuarioLogin.senha}" />
+                        <p:commandButton id="Login" action="#{mbUsuario.consultarLogin()}" value="Login" />
+                        
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </center>
+    </h:body>
+</html>
+

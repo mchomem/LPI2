@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <h:head>
+        <title></title>
+    </h:head>
+    
+    <h:body>
+        
+        <ui:composition template="paginamestre.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    
+                    <p:fieldset legend="Registro da Consulta" id="pnlRegistroConsulta" >
+                        
+                        <p:commandButton id="comNovo" action="#{mbRegistroConsulta.inicializar()}" icon="ui-icon-circle-plus" />
+                        <p:separator />
+                        <p:dataTable id="tblRegistroConsulta"
+                                     value="#{mbRegistroConsulta.voRegistroConsultas}"
+                                     var="registroConsulta" >
+                            <f:facet name="header">
+                                <h:outputText value="Registro de Consultas" />
+                            </f:facet>
+
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Agendamento"/>
+                                </f:facet>
+                                <p:outputLabel value="#{registroConsulta.voAgendamento.idConsulta}" />
+                            </p:column>
+
+                            <p:column width="400">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Prontuário"/>
+                                </f:facet>
+                                <p:outputLabel value="#{registroConsulta.prontuario}" />
+                            </p:column>
+                            
+                            <p:column width="80">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Consulta finalizada?"/>
+                                </f:facet>
+                                <p:outputLabel value="#{registroConsulta.exibicaoconsultaFinalizada}" />
+                            </p:column>
+
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Edição" />
+                                </f:facet>
+                                <p:commandButton action="frmregistroconsulta" icon="ui-icon-pencil" >
+                                    <f:setPropertyActionListener target="#{mbRegistroConsulta.voRegistroConsulta}" value="#{registroConsulta}" />
+                                </p:commandButton>
+                            </p:column>
+
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Exclusão" />
+                                </f:facet>
+                                <p:commandButton action="#{mbRegistroConsulta.excluir()}" icon="ui-icon-closethick">
+                                    <p:confirm header="Web Clínica Médica" message="Confirma exclusão?" icon="ui-icon-alert" />
+                                    <f:setPropertyActionListener target="#{mbRegistroConsulta.voRegistroConsulta}" value="#{registroConsulta}" />
+                                </p:commandButton>
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+                    
+                    </p:fieldset>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+
