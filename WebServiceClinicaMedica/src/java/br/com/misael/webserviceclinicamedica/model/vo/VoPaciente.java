@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package br.com.misael.webclinicamedica.model.vo;
+package br.com.misael.webserviceclinicamedica.model.vo;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -20,19 +15,26 @@ import javax.persistence.Id;
 public class VoPaciente implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaciente;
+    
     @Column(length = 100, nullable = false)
     private String nome;
+    
     @Column(nullable = true)
-    private int idade;
+    private int idade; 
+    
     @Column(length = 1, nullable = false)
     private String sexo;
+    
     @Column(length = 100, nullable = false)
     private String endereco;
+    
     @Column(length = 14, nullable = false)
     private String telefone;
+    
     @Column(nullable = false)
     private boolean ativo;
 
@@ -92,6 +94,14 @@ public class VoPaciente implements Serializable {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+    
+    public String getExibicaoAtivo() {
+        return this.ativo ? "Sim" : "Não";        
+    }
+    
+    public void setExibicaoAtivo(String ativo) {
+        this.ativo = (ativo.equals("Sim") ? true : false);
     }
 
     @Override
